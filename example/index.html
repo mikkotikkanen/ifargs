@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+	<head>
+		<title>ifargs Example page</title>
+	</head>
+	<body>
+		<h1>ifargs</h1>
+		<p>Open console (F12) to see the action.</p>
+		
+		<script src="../ifargs.js"></script>
+		<script>
+			function test() {
+				console.log('Called with: ', arguments);
+				var args;
+				args = ifargs(arguments, 'nick[number], nack[number]') || args;
+				args = ifargs(arguments, 'data[object]') || args;
+				
+				console.log('arguments:', args);
+				console.log('');
+			}
+			
+			test(1, 2);
+			test({one: 1});
+		</script>
+	</body>
+</html>
