@@ -18,15 +18,16 @@
 		for(var i = 0; i < filter.length; i++) {
 			var item = filter[i].replace(/^[\s]+|[\s\.]+$/gi, ''); // Trim (whitespace + ".")
 			item = item.match(/([\w_]+)\[?([\w_]*)\]?/);
-			if(!item || !args[i]) { return; }
-			if(item[2] && typeof args[i] != item[2]) { return; }
+			
+			if(!item) { return null; } // Match failed
+			if(!args[i] && !/\?$/.test(filter[i])) { return null; } // Argument non-existing and not optional
+			if(item[2] && typeof args[i] != item[2] && !/\?$/.test(filter[i])) { return null; } // Item type defined & type differs & not optional
 			
 			vars[item[1]] = args[i];
 		}
 		
 		// Handle argument arrays (...)
 		if(args.length >= filter.length && /\.\.\.$/.test(filter[filter.length-1])) {
-		//if(/\.\.\.$/.test(filter[filter.length-1])) {
 			vars[item[1]] = args.slice(filter.length-1);
 		}
 		

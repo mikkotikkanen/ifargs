@@ -7,9 +7,10 @@ For those days when the permutations of function arguments gets too complex to h
 
 ## Usage
 ```javascript
-args = ifargs(arguments, 'nick[number], nack[number]') || args;
+args = ifargs(arguments, 'this[number], that[number]') || args;
+args = ifargs(arguments, 'this[number], that[number], them...') || args;
 args = ifargs(arguments, 'data[object]') || args;
-args = ifargs(arguments, 'this[string]') || args;
-args = ifargs(arguments, 'that[number]') || args;
+args = ifargs(arguments, 'name[string], age[number]?') || args;
+args = ifargs(arguments, 'size[number]') || args;
 ```
 
