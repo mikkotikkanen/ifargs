@@ -16,16 +16,17 @@
 		// Make sure filters match
 		filter = filter.split(',');
 		for(var i = 0; i < filter.length; i++) {
-			var item = filter[i].replace(/^[\s]+|[\s]+$/gi, ''); // Trim
-			item = item.match(/([\w_]+)?\[([\w]*)?\]/);
-			if(!item) { return; }
+			var item = filter[i].replace(/^[\s]+|[\s\.]+$/gi, ''); // Trim (whitespace + ".")
+			item = item.match(/([\w_]+)\[?([\w_]*)\]?/);
+			if(!item || !args[i]) { return; }
+			if(item[2] && typeof args[i] != item[2]) { return; }
 			
-			if(typeof args[i] != item[2]) { return; }
 			vars[item[1]] = args[i];
 		}
 		
-		//if(args.lenth != vars.length && /\.\.\.$/.test(filter[filter.length-1])) {
-		if(/\.\.\.$/.test(filter[filter.length-1])) {
+		// Handle argument arrays (...)
+		if(args.length >= filter.length && /\.\.\.$/.test(filter[filter.length-1])) {
+		//if(/\.\.\.$/.test(filter[filter.length-1])) {
 			vars[item[1]] = args.slice(filter.length-1);
 		}
 		
